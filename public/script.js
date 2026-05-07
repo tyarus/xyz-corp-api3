@@ -2,7 +2,7 @@
    XYZ Corp Dashboard - JavaScript
    ============================================ */
 
-const API_URL = 'http://localhost:3000/api';
+const API_URL = '/api';
 
 // Initialize dashboard
 document.addEventListener('DOMContentLoaded', () => {
