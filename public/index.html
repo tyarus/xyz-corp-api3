@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XYZ Corp - Project Management Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>🏢 XYZ Corp API</h1>
+                <p>Project Management Dashboard</p>
+            </div>
+            <div class="nav-links">
+                <button onclick="showTab('projects')" class="nav-btn active">Projects</button>
+                <button onclick="showTab('employees')" class="nav-btn">Employees</button>
+                <button onclick="showTab('stats')" class="nav-btn">Statistics</button>
+                <button onclick="showTab('api')" class="nav-btn">API Docs</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container main-content">
+        <!-- Projects Tab -->
+        <div id="projects" class="tab-content active">
+            <div class="section-header">
+                <h2>📋 Projects Management</h2>
+                <button onclick="toggleAddForm()" class="btn btn-primary">+ Add New Project</button>
+            </div>
+
+            <!-- Add Project Form -->
+            <div id="addProjectForm" class="form-container hidden">
+                <h3>Create New Project</h3>
+                <form onsubmit="addProject(event)">
+                    <div class="form-row">
+                        <input type="text" id="projectName" placeholder="Project Name" required>
+                        <input type="text" id="projectTeam" placeholder="Team" required>
+                    </div>
+                    <div class="form-row">
+                        <input type="text" id="projectCountry" placeholder="Country" required>
+                        <input type="date" id="projectDeadline" required>
+                    </div>
+                    <div class="form-row">
+                        <input type="number" id="projectProgress" placeholder="Progress %" min="0" max="100" value="0">
+                        <select id="projectStatus">
+                            <option value="pending">Pending</option>
+                            <option value="active">Active</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Create Project</button>
+                        <button type="button" onclick="toggleAddForm()" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Projects Table -->
+            <div class="table-container">
+                <table id="projectsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Team</th>
+                            <th>Country</th>
+                            <th>Status</th>
+                            <th>Progress</th>
+                            <th>Deadline</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Edit Project Modal -->
+            <div id="editModal" class="modal hidden">
+                <div class="modal-content">
+                    <span class="close" onclick="closeEditModal()">&times;</span>
+                    <h3>Edit Project</h3>
+                    <form onsubmit="updateProject(event)">
+                        <input type="hidden" id="editId">
+                        <div class="form-row">
+                            <input type="text" id="editName" placeholder="Project Name" required>
+                            <input type="text" id="editTeam" placeholder="Team" required>
+                        </div>
+                        <div class="form-row">
+                            <input type="text" id="editCountry" placeholder="Country" required>
+                            <input type="date" id="editDeadline" required>
+                        </div>
+                        <div class="form-row">
+                            <input type="number" id="editProgress" placeholder="Progress %" min="0" max="100">
+                            <select id="editStatus">
+                                <option value="pending">Pending</option>
+                                <option value="active">Active</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success">Update Project</button>
+                            <button type="button" onclick="closeEditModal()" class="btn btn-secondary">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Employees Tab -->
+        <div id="employees" class="tab-content">
+            <div class="section-header">
+                <h2>👥 Team Members</h2>
+                <div class="stats-summary">
+                    <span>Total Employees: <strong id="totalEmployees">0</strong></span>
+                </div>
+            </div>
+
+            <div class="employees-grid" id="employeesGrid">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Statistics Tab -->
+        <div id="stats" class="tab-content">
+            <div class="section-header">
+                <h2>📊 Project Statistics</h2>
+            </div>
+
+            <div class="stats-container">
+                <div class="stat-card">
+                    <h3>Total Projects</h3>
+                    <p class="stat-value" id="statTotal">0</p>
+                </div>
+                <div class="stat-card active">
+                    <h3>Active</h3>
+                    <p class="stat-value" id="statActive">0</p>
+                </div>
+                <div class="stat-card completed">
+                    <h3>Completed</h3>
+                    <p class="stat-value" id="statCompleted">0</p>
+                </div>
+                <div class="stat-card pending">
+                    <h3>Pending</h3>
+                    <p class="stat-value" id="statPending">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Average Progress</h3>
+                    <p class="stat-value" id="statAvgProgress">0%</p>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <h3>Progress Distribution</h3>
+                <div id="progressChart" class="progress-chart">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- API Docs Tab -->
+        <div id="api" class="tab-content">
+            <div class="section-header">
+                <h2>📖 API Documentation</h2>
+            </div>
+
+            <div class="api-docs">
+                <div class="api-endpoint">
+                    <div class="method get">GET</div>
+                    <div class="path">/</div>
+                    <p>Health check and API information</p>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="method get">GET</div>
+                    <div class="path">/api/projects</div>
+                    <p>List all projects</p>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="method post">POST</div>
+                    <div class="path">/api/projects</div>
+                    <p>Create a new project</p>
+                    <pre><code>{
+  "name": "Project Name",
+  "team": "Team Name",
+  "country": "Country",
+  "deadline": "2026-12-31",
+  "progress": 0
+}</code></pre>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="method get">GET</div>
+                    <div class="path">/api/projects/:id</div>
+                    <p>Get project details</p>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="method put">PUT</div>
+                    <div class="path">/api/projects/:id</div>
+                    <p>Update project (status, progress, etc.)</p>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="method delete">DELETE</div>
+                    <div class="path">/api/projects/:id</div>
+                    <p>Delete a project</p>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="method get">GET</div>
+                    <div class="path">/api/employees</div>
+                    <p>List all employees</p>
+                </div>
+
+                <div class="api-endpoint">
+                    <div class="method get">GET</div>
+                    <div class="path">/api/stats</div>
+                    <p>Get project statistics</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 XYZ Corporation. All rights reserved. | <a href="#">API Status</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

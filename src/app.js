@@ -45,6 +45,9 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Serve static files from public folder
+app.use(express.static('public'));
+
 // Morgan HTTP logger
 app.use(morgan('combined'));
 
