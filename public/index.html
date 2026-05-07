@@ -11,14 +11,14 @@
     <nav class="navbar">
         <div class="container">
             <div class="logo">
-                <h1>🏢 XYZ Corp API</h1>
-                <p>Project Management Dashboard</p>
+                <h1>XYZ Corp</h1>
+                <span class="tagline">Project Management Platform</span>
             </div>
             <div class="nav-links">
                 <button onclick="showTab('projects')" class="nav-btn active">Projects</button>
-                <button onclick="showTab('employees')" class="nav-btn">Employees</button>
-                <button onclick="showTab('stats')" class="nav-btn">Statistics</button>
-                <button onclick="showTab('api')" class="nav-btn">API Docs</button>
+                <button onclick="showTab('employees')" class="nav-btn">Team</button>
+                <button onclick="showTab('stats')" class="nav-btn">Analytics</button>
+                <button onclick="showTab('api')" class="nav-btn">Documentation</button>
             </div>
         </div>
     </nav>
@@ -27,8 +27,11 @@
         <!-- Projects Tab -->
         <div id="projects" class="tab-content active">
             <div class="section-header">
-                <h2>📋 Projects Management</h2>
-                <button onclick="toggleAddForm()" class="btn btn-primary">+ Add New Project</button>
+                <div>
+                    <h2>Projects</h2>
+                    <p class="text-muted">Manage and track your organization's projects</p>
+                </div>
+                <button onclick="toggleAddForm()" class="btn btn-primary">New Project</button>
             </div>
 
             <!-- Add Project Form -->
@@ -37,7 +40,7 @@
                 <form onsubmit="addProject(event)">
                     <div class="form-row">
                         <input type="text" id="projectName" placeholder="Project Name" required>
-                        <input type="text" id="projectTeam" placeholder="Team" required>
+                        <input type="text" id="projectTeam" placeholder="Team Name" required>
                     </div>
                     <div class="form-row">
                         <input type="text" id="projectCountry" placeholder="Country" required>
@@ -52,7 +55,7 @@
                         </select>
                     </div>
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-success">Create Project</button>
+                        <button type="submit" class="btn btn-success">Create</button>
                         <button type="button" onclick="toggleAddForm()" class="btn btn-secondary">Cancel</button>
                     </div>
                 </form>
@@ -88,7 +91,7 @@
                         <input type="hidden" id="editId">
                         <div class="form-row">
                             <input type="text" id="editName" placeholder="Project Name" required>
-                            <input type="text" id="editTeam" placeholder="Team" required>
+                            <input type="text" id="editTeam" placeholder="Team Name" required>
                         </div>
                         <div class="form-row">
                             <input type="text" id="editCountry" placeholder="Country" required>
@@ -103,7 +106,7 @@
                             </select>
                         </div>
                         <div class="form-actions">
-                            <button type="submit" class="btn btn-success">Update Project</button>
+                            <button type="submit" class="btn btn-success">Update</button>
                             <button type="button" onclick="closeEditModal()" class="btn btn-secondary">Cancel</button>
                         </div>
                     </form>
@@ -114,10 +117,11 @@
         <!-- Employees Tab -->
         <div id="employees" class="tab-content">
             <div class="section-header">
-                <h2>👥 Team Members</h2>
-                <div class="stats-summary">
-                    <span>Total Employees: <strong id="totalEmployees">0</strong></span>
+                <div>
+                    <h2>Team Members</h2>
+                    <p class="text-muted">View your organization's team across different countries</p>
                 </div>
+                <div class="badge-info" id="totalEmployees">0 Members</div>
             </div>
 
             <div class="employees-grid" id="employeesGrid">
@@ -128,29 +132,30 @@
         <!-- Statistics Tab -->
         <div id="stats" class="tab-content">
             <div class="section-header">
-                <h2>📊 Project Statistics</h2>
+                <h2>Analytics</h2>
+                <p class="text-muted">Project statistics and insights</p>
             </div>
 
             <div class="stats-container">
                 <div class="stat-card">
-                    <h3>Total Projects</h3>
-                    <p class="stat-value" id="statTotal">0</p>
+                    <div class="stat-label">Total Projects</div>
+                    <div class="stat-value" id="statTotal">0</div>
                 </div>
-                <div class="stat-card active">
-                    <h3>Active</h3>
-                    <p class="stat-value" id="statActive">0</p>
+                <div class="stat-card active-stat">
+                    <div class="stat-label">Active</div>
+                    <div class="stat-value" id="statActive">0</div>
                 </div>
-                <div class="stat-card completed">
-                    <h3>Completed</h3>
-                    <p class="stat-value" id="statCompleted">0</p>
+                <div class="stat-card completed-stat">
+                    <div class="stat-label">Completed</div>
+                    <div class="stat-value" id="statCompleted">0</div>
                 </div>
-                <div class="stat-card pending">
-                    <h3>Pending</h3>
-                    <p class="stat-value" id="statPending">0</p>
+                <div class="stat-card pending-stat">
+                    <div class="stat-label">Pending</div>
+                    <div class="stat-value" id="statPending">0</div>
                 </div>
                 <div class="stat-card">
-                    <h3>Average Progress</h3>
-                    <p class="stat-value" id="statAvgProgress">0%</p>
+                    <div class="stat-label">Average Progress</div>
+                    <div class="stat-value" id="statAvgProgress">0%</div>
                 </div>
             </div>
 
@@ -165,7 +170,8 @@
         <!-- API Docs Tab -->
         <div id="api" class="tab-content">
             <div class="section-header">
-                <h2>📖 API Documentation</h2>
+                <h2>API Documentation</h2>
+                <p class="text-muted">Complete API reference for integration</p>
             </div>
 
             <div class="api-docs">
