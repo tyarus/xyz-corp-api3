@@ -59,10 +59,10 @@ app.use(customLogger);
 // ============================================
 
 /**
- * GET / 
+ * GET /health
  * Health check endpoint + info tentang API
  */
-app.get('/', (req, res) => {
+app.get('/health', (req, res) => {
   res.json({
     success: true,
     message: 'XYZ Corp REST API is running',
@@ -72,7 +72,7 @@ app.get('/', (req, res) => {
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
     endpoints: {
-      health_check: 'GET /',
+      health_check: 'GET /health',
       projects: {
         list_all: 'GET /api/projects',
         create: 'POST /api/projects',
